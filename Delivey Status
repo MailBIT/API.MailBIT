@@ -1,0 +1,28 @@
+?php
+    require_once 'vendor/autoload.php';
+
+    $client = new \GuzzleHttp\Client([
+        'base_uri' => 'http://api.mailbit.co.th:8001/'
+    ]);
+
+    $form_params = [
+        'username' => 'your-username', // Username | *** You have to change this line ***
+        'password' => 'your-password', // Password | *** You have to change this line ***
+        'messageId' => '75779386556733a96466e36953e19', // message_id | *** You have to change this line ***
+        'command' => 'query',
+    ];
+
+    $guzzle_options = ['form_params' => $form_params];
+
+    $response = $client->call('POST', 'api', $guzzle_options);
+
+    $decoded = @json_decode((string)$response->getBody(), true);
+
+    print_r($decoded);
+
+//  Array
+//  (
+//      [status] => DELIVRD
+//      [delivery_time] => 2001150008
+//      [mccmnc] => 520004
+//  )
