@@ -1,0 +1,47 @@
+<?php
+    require_once 'vendor/autoload.php';
+
+    $client = new \GuzzleHttp\Client([
+        'base_uri' => 'http://api.mailbit.co.th:8001/'
+    ]);
+
+    $form_params = [
+        'username' => 'your-username', // Username | *** You have to change this line ***
+        'password' => 'your-password', // Password | *** You have to change this line ***
+        'ani' => 'SMS', // Sender Name | *** You have to change this line ***
+        'dnis' => '66812345678,66812345679,66812345680', // Mobile Number | *** You have to change this line ***
+        'message' => 'Hello World', // Message | *** You have to change this line ***
+        'command' => 'submit',
+        'longMessageMode' => 'payload',
+    ];
+
+    $guzzle_options = ['form_params' => $form_params];
+
+    $response = $client->call('POST', 'api', $guzzle_options);
+
+    $decoded = @json_decode((string)$response->getBody(), true);
+
+    print_r($decoded);
+
+//  Array
+//  (
+//      [0] => Array
+//          (
+//              [dnis] => 66812345678
+//              [message_id] => 75779293483179d2064cd1416dd17
+//          )
+//
+//      [1] => Array
+//          (
+//              [dnis] => 66812345679
+//              [message_id] => 75779150566718c8ba95bdab492c5
+//          )
+//
+//
+//      [2] => Array
+//          (
+//              [dnis] => 66812345680
+//              [message_id] => 75779150566718c8ba95bdab492c5
+//          )
+//
+//  )
